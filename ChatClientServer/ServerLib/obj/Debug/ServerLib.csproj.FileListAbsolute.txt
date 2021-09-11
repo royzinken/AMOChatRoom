@@ -1,0 +1,22 @@
+E:\DevLauncherServer\ServerLib\obj\Debug\ResolveAssemblyReference.cache
+E:\DevLauncherServer\ServerLib\bin\Debug\ServerLib.dll
+E:\DevLauncherServer\ServerLib\bin\Debug\ServerLib.pdb
+E:\DevLauncherServer\ServerLib\obj\Debug\ServerLib.dll
+E:\DevLauncherServer\ServerLib\obj\Debug\ServerLib.pdb
+C:\Users\Br8zru\Documents\Visual Studio 2015\Projects\HackLoader\DevLauncherServer\ServerLib\bin\Debug\ServerLib.dll
+C:\Users\Br8zru\Documents\Visual Studio 2015\Projects\HackLoader\DevLauncherServer\ServerLib\bin\Debug\ServerLib.pdb
+C:\Users\Br8zru\Documents\Visual Studio 2015\Projects\HackLoader\DevLauncherServer\ServerLib\obj\Debug\ServerLib.csprojResolveAssemblyReference.cache
+C:\Users\Br8zru\Documents\Visual Studio 2015\Projects\HackLoader\DevLauncherServer\ServerLib\obj\Debug\ServerLib.dll
+C:\Users\Br8zru\Documents\Visual Studio 2015\Projects\HackLoader\DevLauncherServer\ServerLib\obj\Debug\ServerLib.pdb
+D:\ChatServer\ServerLib\bin\Debug\ServerLib.dll
+D:\ChatServer\ServerLib\bin\Debug\ServerLib.pdb
+D:\ChatServer\ServerLib\obj\Debug\ServerLib.csprojAssemblyReference.cache
+D:\ChatServer\ServerLib\obj\Debug\ServerLib.csproj.CoreCompileInputs.cache
+D:\ChatServer\ServerLib\obj\Debug\ServerLib.dll
+D:\ChatServer\ServerLib\obj\Debug\ServerLib.pdb
+C:\Users\Br8zru\source\repos\ChatServer\ServerLib\bin\Debug\ServerLib.dll
+C:\Users\Br8zru\source\repos\ChatServer\ServerLib\bin\Debug\ServerLib.pdb
+C:\Users\Br8zru\source\repos\ChatServer\ServerLib\obj\Debug\ServerLib.csprojAssemblyReference.cache
+C:\Users\Br8zru\source\repos\ChatServer\ServerLib\obj\Debug\ServerLib.csproj.CoreCompileInputs.cache
+C:\Users\Br8zru\source\repos\ChatServer\ServerLib\obj\Debug\ServerLib.dll
+C:\Users\Br8zru\source\repos\ChatServer\ServerLib\obj\Debug\ServerLib.pdb

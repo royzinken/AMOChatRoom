@@ -1,0 +1,13 @@
+C:\Users\Br8zru\source\repos\AMOChatRoom\ChatClientServer\ChatClientServer\bin\Debug\ChatClientServer.exe.config
+C:\Users\Br8zru\source\repos\AMOChatRoom\ChatClientServer\ChatClientServer\bin\Debug\ChatClientServer.exe
+C:\Users\Br8zru\source\repos\AMOChatRoom\ChatClientServer\ChatClientServer\bin\Debug\ChatClientServer.pdb
+C:\Users\Br8zru\source\repos\AMOChatRoom\ChatClientServer\ChatClientServer\obj\Debug\ChatClientServer.csprojAssemblyReference.cache
+C:\Users\Br8zru\source\repos\AMOChatRoom\ChatClientServer\ChatClientServer\obj\Debug\ChatClientServer.Form1.resources
+C:\Users\Br8zru\source\repos\AMOChatRoom\ChatClientServer\ChatClientServer\obj\Debug\ChatClientServer.Properties.Resources.resources
+C:\Users\Br8zru\source\repos\AMOChatRoom\ChatClientServer\ChatClientServer\obj\Debug\ChatClientServer.csproj.GenerateResource.cache
+C:\Users\Br8zru\source\repos\AMOChatRoom\ChatClientServer\ChatClientServer\obj\Debug\ChatClientServer.csproj.CoreCompileInputs.cache
+C:\Users\Br8zru\source\repos\AMOChatRoom\ChatClientServer\ChatClientServer\obj\Debug\ChatClientServer.exe
+C:\Users\Br8zru\source\repos\AMOChatRoom\ChatClientServer\ChatClientServer\obj\Debug\ChatClientServer.pdb
+C:\Users\Br8zru\source\repos\AMOChatRoom\ChatClientServer\ChatClientServer\bin\Debug\ServerLib.dll
+C:\Users\Br8zru\source\repos\AMOChatRoom\ChatClientServer\ChatClientServer\bin\Debug\ServerLib.pdb
+C:\Users\Br8zru\source\repos\AMOChatRoom\ChatClientServer\ChatClientServer\obj\Debug\ChatClientServer.csproj.CopyComplete
