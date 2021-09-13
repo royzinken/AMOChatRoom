@@ -28,7 +28,7 @@ namespace ServerLib.Interface
         /// <param name="clientID">클라이언트 아이디</param>
         /// <returns>클라이언트 객체</returns>
         IAsyncSocketClient GetClientByID(string clientID);
-        void SetClientIDandNameByIP(string ip, string id, string name);
+        void SetClientIDandNameByIP(string ip,string port, string id, string name);
         /// <summary>
         /// 서버 바인딩
         /// </summary>
@@ -53,7 +53,7 @@ namespace ServerLib.Interface
         /// </summary>
         /// <param name="sendByte">전송 데이터</param>
         /// <param name="clientID">클라이언트 아이디</param>
-        void SendToSpecificClientByIP(byte[] sendByte, string clientIP);
+        void SendToSpecificClientByIP(byte[] sendByte, string clientIP,string port);
         /// <summary>
         /// 데이터를 자신을 제외한 클라이언트들에게 전송
         /// </summary>

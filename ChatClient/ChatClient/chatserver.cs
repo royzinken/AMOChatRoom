@@ -17,7 +17,7 @@ namespace ChatClient
             if(_client == null)
             {
                 _client = new AdvancedAsyncSocketClient(Encoding.UTF8.GetBytes("\r\n"));
-                _client.Connect("192.168.2.34", 5010);
+                _client.Connect("192.168.1.186", 5010);
             }
             return _client;
         }

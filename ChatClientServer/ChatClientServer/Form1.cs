@@ -114,11 +114,14 @@ namespace ChatClientServer
                             string user_list = string.Join(",", Userlist.ToArray());
 
                             _sendBuffer = Convert.ToString((int)_return + _endPacket.ToString() + user_list + _endPacket.ToString());
-                            _ChatClientServer.SendToSpecificClientByIP(Encoding.UTF8.GetBytes(_sendBuffer), ((IAsyncSocketClient)sender)._clientIP);
+                            _ChatClientServer.SendToSpecificClientByIP(Encoding.UTF8.GetBytes(_sendBuffer), ((IAsyncSocketClient)sender)._clientIP, ((IAsyncSocketClient)sender)._clientPort);
                         }
                         break;
                     case CHATROOMSTATE.CHATROOM_LOGOUT:
-                        writeLog(LOGTYPES.INFO, clientIP, clientID, "logged out!");
+                        {
+                            ((IAsyncSocketClient)sender).Close();
+                            writeLog(LOGTYPES.INFO, clientIP, clientID, "logged out!");
+                        }
                         break;
                     case CHATROOMSTATE.CHATROOM_SEND_MESSAGE:
                         {
@@ -133,6 +136,7 @@ namespace ChatClientServer
         public int LoginCheck(object sender, List<string> messageList)
         {
             string clientIP = ((IAsyncSocketClient)sender)._clientIP;
+            string clientPort = ((IAsyncSocketClient)sender)._clientPort;
             string username = messageList[1];
             string password = messageList[2];
 
@@ -141,7 +145,7 @@ namespace ChatClientServer
                 if (!Userlist.Any(_user => _user == username))
                     Userlist.Add(username);
 
-                _ChatClientServer.SetClientIDandNameByIP(clientIP, username, username);
+                _ChatClientServer.SetClientIDandNameByIP(clientIP,clientPort, username, username);
 
             _sendBuffer = Convert.ToString((int)CHATROOMSTATE.CHATROOM_USER_ADD + _endPacket.ToString() + username + _endPacket.ToString());
             _ChatClientServer.SendToOtherClient(Encoding.UTF8.GetBytes(_sendBuffer), ((IAsyncSocketClient)sender));

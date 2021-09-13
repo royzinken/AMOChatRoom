@@ -125,11 +125,11 @@ namespace ServerLib.Impl
             return null;
         }
 
-        public void SetClientIDandNameByIP(string ip, string id, string name)
+        public void SetClientIDandNameByIP(string ip,string port, string id, string name)
         {
             foreach (IAsyncSocketClient client in _clientList)
             {
-                if (client._clientIP == ip)
+                if (client._clientIP == ip && client._clientPort == port)
                 {
                     client._clientID = id;
                     client._clientName = name;
@@ -183,11 +183,11 @@ namespace ServerLib.Impl
             }
         }
 
-        public void SendToSpecificClientByIP(byte[] sendByte, string ip)
+        public void SendToSpecificClientByIP(byte[] sendByte, string ip, string port)
         {
             foreach (IAsyncSocketClient client in _clientList)
             {
-                if (client._clientIP == ip)
+                if (client._clientIP == ip && client._clientPort == port)
                 {
                     client.Send(sendByte);
                     break;

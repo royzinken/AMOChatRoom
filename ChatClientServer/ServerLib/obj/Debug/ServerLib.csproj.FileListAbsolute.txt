@@ -20,3 +20,9 @@ C:\Users\Br8zru\source\repos\ChatServer\ServerLib\obj\Debug\ServerLib.csprojAsse
 C:\Users\Br8zru\source\repos\ChatServer\ServerLib\obj\Debug\ServerLib.csproj.CoreCompileInputs.cache
 C:\Users\Br8zru\source\repos\ChatServer\ServerLib\obj\Debug\ServerLib.dll
 C:\Users\Br8zru\source\repos\ChatServer\ServerLib\obj\Debug\ServerLib.pdb
+C:\Users\Linda\source\repos\AMOChatRoom\ChatClientServer\ServerLib\bin\Debug\ServerLib.dll
+C:\Users\Linda\source\repos\AMOChatRoom\ChatClientServer\ServerLib\bin\Debug\ServerLib.pdb
+C:\Users\Linda\source\repos\AMOChatRoom\ChatClientServer\ServerLib\obj\Debug\ServerLib.csprojAssemblyReference.cache
+C:\Users\Linda\source\repos\AMOChatRoom\ChatClientServer\ServerLib\obj\Debug\ServerLib.csproj.CoreCompileInputs.cache
+C:\Users\Linda\source\repos\AMOChatRoom\ChatClientServer\ServerLib\obj\Debug\ServerLib.dll
+C:\Users\Linda\source\repos\AMOChatRoom\ChatClientServer\ServerLib\obj\Debug\ServerLib.pdb
