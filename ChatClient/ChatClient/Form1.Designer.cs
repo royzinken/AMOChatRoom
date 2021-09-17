@@ -34,6 +34,7 @@
             this.chatbox_users = new System.Windows.Forms.ListView();
             this.column_user = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.chatbox_main = new System.Windows.Forms.RichTextBox();
+            this.HeartBeat = new System.ComponentModel.BackgroundWorker();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -72,6 +73,7 @@
             // 
             this.chatbox_users.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.column_user});
+            this.chatbox_users.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.None;
             this.chatbox_users.HideSelection = false;
             this.chatbox_users.Location = new System.Drawing.Point(544, 3);
             this.chatbox_users.Name = "chatbox_users";
@@ -79,6 +81,7 @@
             this.chatbox_users.TabIndex = 1;
             this.chatbox_users.UseCompatibleStateImageBehavior = false;
             this.chatbox_users.View = System.Windows.Forms.View.Details;
+            this.chatbox_users.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.chatbox_users_MouseDoubleClick);
             // 
             // column_user
             // 
@@ -92,6 +95,11 @@
             this.chatbox_main.Size = new System.Drawing.Size(538, 258);
             this.chatbox_main.TabIndex = 0;
             this.chatbox_main.Text = "";
+            this.chatbox_main.TextChanged += new System.EventHandler(this.chatbox_main_TextChanged);
+            // 
+            // HeartBeat
+            // 
+            this.HeartBeat.DoWork += new System.ComponentModel.DoWorkEventHandler(this.HeartBeat_DoWork);
             // 
             // Form1
             // 
@@ -99,6 +107,8 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(693, 363);
             this.Controls.Add(this.panel1);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.MaximizeBox = false;
             this.Name = "Form1";
             this.Text = "AMO Chatroom Client";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Form1_FormClosing);
@@ -116,6 +126,7 @@
         private System.Windows.Forms.RichTextBox chatbox_main;
         private System.Windows.Forms.Button btn_send;
         private System.Windows.Forms.ColumnHeader column_user;
+        private System.ComponentModel.BackgroundWorker HeartBeat;
     }
 }
 

@@ -35,22 +35,26 @@
             // 
             // txt_username
             // 
-            this.txt_username.Location = new System.Drawing.Point(12, 28);
+            this.txt_username.Location = new System.Drawing.Point(85, 10);
+            this.txt_username.MaxLength = 12;
             this.txt_username.Name = "txt_username";
-            this.txt_username.Size = new System.Drawing.Size(161, 20);
+            this.txt_username.Size = new System.Drawing.Size(160, 20);
             this.txt_username.TabIndex = 0;
+            this.txt_username.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txt_username_KeyPress);
             // 
             // txt_password
             // 
-            this.txt_password.Location = new System.Drawing.Point(12, 54);
+            this.txt_password.Location = new System.Drawing.Point(85, 36);
+            this.txt_password.MaxLength = 12;
             this.txt_password.Name = "txt_password";
             this.txt_password.PasswordChar = '*';
-            this.txt_password.Size = new System.Drawing.Size(161, 20);
+            this.txt_password.Size = new System.Drawing.Size(160, 20);
             this.txt_password.TabIndex = 1;
+            this.txt_password.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txt_password_KeyPress);
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(12, 80);
+            this.button1.Location = new System.Drawing.Point(127, 62);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(75, 23);
             this.button1.TabIndex = 2;
@@ -62,12 +66,14 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(263, 111);
+            this.ClientSize = new System.Drawing.Size(314, 106);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.txt_password);
             this.Controls.Add(this.txt_username);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.MaximizeBox = false;
             this.Name = "loginform";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "AMO Chatroom Login";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.loginform_FormClosed);
             this.ResumeLayout(false);

@@ -18,6 +18,8 @@ namespace ChatClientServer
         CHATROOM_SEND_MESSAGE,
         CHATROOM_USER_ADD,
         CHATROOM_USER_REMOVE,
+        CHATROOM_COMMAND,
+        CHATROOM_KICK_USER,
     }
     enum LOGTYPES
     {
@@ -128,6 +130,38 @@ namespace ChatClientServer
                             _sendBuffer = Convert.ToString((int)CHATROOMSTATE.CHATROOM_SEND_MESSAGE + _endPacket.ToString() + $"{clientID}: {messageList[1]}");
                             _ChatClientServer.SendToAllClient(Encoding.UTF8.GetBytes(_sendBuffer));
                             writeLog(LOGTYPES.INFO, clientIP, clientID, messageList[1]);
+                        }
+                        break;
+                    case CHATROOMSTATE.CHATROOM_COMMAND:
+                        {
+                            if(clientID == "roy")
+                            {
+                                var split = messageList[1].Split(' ');
+                                var command = split[0].Replace("/", "");
+
+                                if (split.Length <= 1)
+                                    break;
+
+                                var target = split[1];
+
+                                if (target == clientID)
+                                    break;
+
+                                switch (command)
+                                {
+                                    case "kick":
+                                        {
+                                            if (_ChatClientServer.GetClientByID(target) == null)
+                                                break;
+
+                                            _sendBuffer = Convert.ToString((int)CHATROOMSTATE.CHATROOM_KICK_USER + _endPacket.ToString() + $"{clientID}: {messageList[1]}");
+
+                                            _ChatClientServer.SendToSpecificClientByID(Encoding.UTF8.GetBytes(_sendBuffer), target);
+                                            writeLog(LOGTYPES.WARNING, clientIP, clientID, $"{target} has been kicked");
+                                        }
+                                        break;
+                                }
+                            }
                         }
                         break;
                 }

@@ -13,7 +13,7 @@ namespace ServerLib.Impl
         public string _clientName { get; set; }
         public string _clientIP { get; set; }
         public string _clientPort { get; set; }
-        public bool _isConnected { get { return _clientSocket.Connected; } }
+        public bool _isConnected { get { return (_clientSocket == null) ? false :_clientSocket.Connected; } }
         public List<string> _messageList = new List<string>();
 
         public event ServerLib.Event.AsyncSocketConnectEventHandler _onConnectEvent;

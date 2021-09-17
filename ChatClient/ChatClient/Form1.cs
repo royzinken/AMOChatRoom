@@ -7,7 +7,9 @@ using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Forms;
 
 namespace ChatClient
@@ -21,6 +23,8 @@ namespace ChatClient
         CHATROOM_SEND_MESSAGE,
         CHATROOM_USER_ADD,
         CHATROOM_USER_REMOVE,
+        CHATROOM_COMMAND,
+        CHATROOM_KICK_USER,
     }
     public partial class Form1 : Form
     {
@@ -31,19 +35,36 @@ namespace ChatClient
         CHATROOMSTATE _chatroomstate;
 
         loginform mainform = new loginform();
+        IAsyncSocketClient _servercon;
+
+
+        public static string _privateChat;
 
         public Form1()
         {
             InitializeComponent();
+
+            _servercon = chatserver.ChatServerConn();
+
+            if (!_servercon._isConnected)
+            {
+                MessageBox.Show("Chatserver not online!");
+                System.Environment.Exit(1);
+            }
+
+            HeartBeat.RunWorkerAsync();
             CreateClientSocket();
         }
         public void CreateClientSocket()
         {
-            chatserver.ChatServerConn()._onConnectEvent += new ServerLib.Event.AsyncSocketConnectEventHandler(Client_OnConnect);
-            chatserver.ChatServerConn()._onSendEvent += new ServerLib.Event.AsyncSocketSendEventHandler(Client_OnSend);
-            chatserver.ChatServerConn()._onReceiveEvent += new ServerLib.Event.AsyncSocketReceiveEventHandler(Client_OnReceive);
-            chatserver.ChatServerConn()._onErrorEvent += new ServerLib.Event.AsyncSocketErrorEventHandler(Client_OnError);
-            chatserver.ChatServerConn()._onCloseEvent += new ServerLib.Event.AsyncSocketCloseEventHandler(Client_OnClose);
+            if (_servercon._isConnected)
+            {
+                _servercon._onConnectEvent += new ServerLib.Event.AsyncSocketConnectEventHandler(Client_OnConnect);
+                _servercon._onSendEvent += new ServerLib.Event.AsyncSocketSendEventHandler(Client_OnSend);
+                _servercon._onReceiveEvent += new ServerLib.Event.AsyncSocketReceiveEventHandler(Client_OnReceive);
+                _servercon._onErrorEvent += new ServerLib.Event.AsyncSocketErrorEventHandler(Client_OnError);
+                _servercon._onCloseEvent += new ServerLib.Event.AsyncSocketCloseEventHandler(Client_OnClose);
+            }
         }
         public void ServerPacketAnalysis(ServerLib.Event.AsyncSocketReceiveEventArgs e)
         {
@@ -54,9 +75,9 @@ namespace ChatClient
             }
             else
             {
-                CHATROOMSTATE type = (CHATROOMSTATE)Int32.Parse(e._receiveMessageList[0]);
+                _chatroomstate = (CHATROOMSTATE)Int32.Parse(e._receiveMessageList[0]);
 
-                switch (type)
+                switch (_chatroomstate)
                 {
                     case CHATROOMSTATE.LOGIN_SUCCEED:
                         {
@@ -66,7 +87,17 @@ namespace ChatClient
                             {
                                 var listViewItem = new ListViewItem(user);
 
-                                chatbox_users.Items.Add(listViewItem);
+                                if (user == _servercon._clientID)
+                                {
+                                    //listViewItem.Font = new Font(listViewItem.Font, listViewItem.Font.Style | FontStyle.Bold);
+                                    listViewItem.ForeColor = Color.Lime;
+
+                                    chatbox_users.Items.Insert(0,listViewItem);
+                                }
+                                else
+                                {
+                                    chatbox_users.Items.Add(listViewItem);
+                                }
                             }
                             mainform.Hide();
                             this.Show();
@@ -79,11 +110,17 @@ namespace ChatClient
                         break;
                     case CHATROOMSTATE.CHATROOM_SEND_MESSAGE:
                         {
-                            chatbox_main.AppendText(e._receiveMessageList[1] + "\n");
+                            chatbox_main.SelectionColor = Color.Green;
+                            chatbox_main.AppendText($"[{DateTime.Now.ToString("dddd HH:mm")}] ");
+                            chatbox_main.SelectionColor = Color.Blue;
+                            chatbox_main.AppendText($"{e._receiveMessageList[1]} \n");
                         }
                         break;
                     case CHATROOMSTATE.CHATROOM_USER_ADD:
                         {
+                            chatbox_main.SelectionColor = Color.DarkBlue;
+                            chatbox_main.AppendText($"{e._receiveMessageList[1]} Joined the chat!\n");
+
                             var listViewItem = new ListViewItem(e._receiveMessageList[1]);
 
                             chatbox_users.Items.Add(listViewItem);
@@ -94,34 +131,23 @@ namespace ChatClient
                             for (int i = chatbox_users.Items.Count - 1; i >= 0; i--)
                             {
                                 if (chatbox_users.Items[i].Text == e._receiveMessageList[1])
+                                {
+                                    chatbox_main.SelectionColor = Color.Orange;
+                                    chatbox_main.AppendText($"{e._receiveMessageList[1]} Left the chat!\n");
                                     chatbox_users.Items[i].Remove();
-
+                                }
                             }
+                        }
+                        break;
+                    case CHATROOMSTATE.CHATROOM_KICK_USER:
+                        {
+                            chatserver.ChatServerConn().Close();
+                            MessageBox.Show("You have been kicked!");
+                            System.Environment.Exit(1);
                         }
                         break;
                 }
             }
-
-           
-            //string serverMessage = Convert.ToString(e._receiveMessageList[0]);
-
-
-            //addMessage(serverMessage);
-            //this.Dispatcher.Invoke(() =>
-            //{
-            //    chatbox_main.AppendText(Environment.NewLine + serverMessage);
-            //});
-
-
-
-            //_errorCode = (ERRORCODES)Int32.Parse(serverMessage);
-
-            //switch (_errorCode)
-            //{
-            //    case ERRORCODES.LOGIN_SUCCEED:
-            //        break;
-            //}
-
         }
         void Client_OnReceive(object sender, ServerLib.Event.AsyncSocketReceiveEventArgs e)
         {
@@ -154,7 +180,20 @@ namespace ChatClient
         }
         public void sendMessage()
         {
-            _sendBuffer = Convert.ToString((int)CHATROOMSTATE.CHATROOM_SEND_MESSAGE + _endPacket.ToString() + chatbox_input.Text + _endPacket.ToString());
+            CHATROOMSTATE MESSAGE_TYPE = CHATROOMSTATE.CHATROOM_SEND_MESSAGE;
+
+            if (String.IsNullOrWhiteSpace(chatbox_input.Text))
+            {
+                chatbox_input.Clear();
+                return;
+            }
+
+
+            if (chatbox_input.Text.StartsWith("/"))
+                MESSAGE_TYPE = CHATROOMSTATE.CHATROOM_COMMAND;
+
+
+            _sendBuffer = Convert.ToString((int)MESSAGE_TYPE + _endPacket.ToString() + chatbox_input.Text + _endPacket.ToString());
             chatserver.ChatServerConn().Send(Encoding.UTF8.GetBytes(_sendBuffer));
             chatbox_input.Clear();
         }
@@ -178,7 +217,36 @@ namespace ChatClient
 
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
         {
-            chatserver.ChatServerConn().Close();
+            _servercon.Close();
+        }
+
+        private void HeartBeat_DoWork(object sender, DoWorkEventArgs e)
+        {
+            while(true)
+            {
+                if (_servercon._isConnected == false)
+                {
+                    MessageBox.Show("Server disconnected!");
+                    System.Environment.Exit(1);
+                }
+                Thread.Sleep(1000);
+            }
+        }
+
+        private void chatbox_main_TextChanged(object sender, EventArgs e)
+        {
+            chatbox_main.SelectionStart = chatbox_main.Text.Length;
+            chatbox_main.ScrollToCaret();
+        }
+
+        private void chatbox_users_MouseDoubleClick(object sender, MouseEventArgs e)
+        {
+            var senderList = (ListView)sender;
+
+            _privateChat = senderList.HitTest(e.Location).Item.Text;
+
+            privateChatForm frm = new privateChatForm();
+            frm.Show();
         }
     }
 }
